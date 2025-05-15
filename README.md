@@ -73,6 +73,7 @@ Return Book:marked book returne and update issue table
 View Record:Shows the record
 Delete Record: Delete the record
 Calculate Fine: will calculate the fine and shows the amount
-Snaps of project:
+Snaps of project:![image](https://github.com/user-attachments/assets/d918ddc6-dca6-49fa-86ce-1a6912319263)
+
 
 
