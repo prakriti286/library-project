@@ -74,6 +74,16 @@ View Record:Shows the record
 Delete Record: Delete the record
 Calculate Fine: will calculate the fine and shows the amount
 Snaps of project:![image](https://github.com/user-attachments/assets/d918ddc6-dca6-49fa-86ce-1a6912319263)
+![image](https://github.com/user-attachments/assets/9ef387bf-61d2-4a3a-8f0e-9668a2b98322)
+![image](https://github.com/user-attachments/assets/b0f19749-d631-4e50-9be8-0a01e0833c69)
+![image](https://github.com/user-attachments/assets/bdb182f7-7021-4be1-9fbe-0ce882f39f2f)
+![image](https://github.com/user-attachments/assets/0c8a9dcb-5a2a-48d2-a481-193991233600)
+![image](https://github.com/user-attachments/assets/28a9724e-c852-41c8-9078-9d180796e492)
+![image](https://github.com/user-attachments/assets/ba1739dc-0772-445d-b6b2-190fcce45c4a)
+
+
+
+
 
 
 
