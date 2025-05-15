@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Registration Page</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    .dropdown-submenu{
+        position: relative;
+    }
+    .dropdown-submenu>.dropdown-menu{
+        top: 0;
+        left: 100%;
+        margin-left: 0.1rem;
+    }
+    .form-control{
+        width: 200px;
+    }
+    .head-shape h1 {
+  background-color: #f0a; 
+  color:greenyellow;              
+  padding: 10px;                
+  border-radius: 20px;   
+  width:fit-content;          
+  box-shadow: 0 4px 8px #ccc;
+
+}
+    .btn{
+    color: greenyellow !important; 
+}
+ </style>
+</head>
+<body>
+<div class="container-fluid">
+<div class="row">
+<div class="col-md">
+    <div class="bg" style="background-image: url('lib6.jpg'); background-size: cover; background-position: center;min-height: 100vh;">
+  <!--dashboard link-->
+      <nav class="navbar navbar-expand-lg navbar-dark px-4" style="background-color: wheat;">
+ <div class="container-fluid justify-content-end"><a class="nav-link text-white fw-bold" href="dash.html"><i class="fa fa-home me-1"></i>Dashboard</a>
+  </div>
+</nav>
+  <!--heading-->
+<div class=" head-shape d-flex flex-column align-items-center py-3 text-white">
+   <h1 class="display-5">Student Registration Form</h1>
+</div>
+<!--Form-->
+<form class="text-white px-3">
+   <!--1 row--> 
+<div class="row">
+    <div class=" col-md-6 d-flex flex-column  justify-content-center align-items-center py-3">
+        <label for="studentId" class="me-2 fw-bold" style="font-size:x-large; color:greenyellow;">Student ID</label>
+        <input type="number" id="studentId" min="1" class="form-control" style="font-size: large; font-weight: 500;" placeholder="ID" required>
+    </div>
+    <div class="col-md-6 d-flex flex-column justify-content-center align-items-center py-3">
+       <label for="studentname" class="me-2 fw-bold" style="font-size:x-large;color:greenyellow;">Student Name:</label>
+        <input type="text" id="studentname" name="studentname" class="form-control-lg" style="font-size: large; font-weight: 500;" placeholder="Enter name" required> 
+    </div><!--end col-->
+</div><!--end 1 row-->
+<!--2 row-->
+<div class="row">
+      <div class=" col-md-4 d-flex flex-column  justify-content-center align-items-center py-3 ">
+      <div class="btn-group dropend me-3"><!--1-dropbutton-->
+           <button class="btn btn-white dropdown-toggle text-white" type="button" style="font-size: xx-large;" data-bs-toggle="dropdown">Course</button>
+           <ul class="dropdown-menu"><!--1droplist-->
+           <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Bachelor's Course</a>
+<ul class="dropdown-menu"><!--subdroplist-->
+<li><a class="dropdown-item" href="#" data-value="B.Sc">B.Sc</a></li>
+<li><a class="dropdown-item" href="#" data-value="BCA">BCA</a></li>
+<li><a class="dropdown-item" href="#" data-value="BBA">BBA</a></li>
+<li><a class="dropdown-item" href="#" data-value="B.A.">B.A</a></li>
+<li><a class="dropdown-item" href="#" data-value="B.Com">B.Com</a></li>
+    </ul></li><!--endsubsub--><!--end Bachelorlist-->
+<!--masterlist-->
+    <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Master's Course</a>
+    <ul class="dropdown-menu"><!--subdroplist-->
+<li><a class="dropdown-item"  href="#" data-value="M.Sc">M.Sc</a></li>
+<li><a class="dropdown-item" href="#" data-value="MCA">MCA</a></li>
+<li><a class="dropdown-item" href="#" data-value="MBA">MBA</a></li>
+<li><a class="dropdown-item" href="#" data-value="M.A.">M.A.</a></li>
+<li><a class="dropdown-item" href="#" data-value="M.Com">M.Com</a></li>
+</ul></li><!--endmasterlist-->
+
+</ul><!--end droprlist-->
+</div><!--enddropbutton-->
+ <input type="text" id="selectedcou" style="font-size: large; font-weight: 500;" class="form-control-lg" placeholder="Select Course"readonly>
+    </div><!--end1-colm-->
+
+<div class="col-md-4 d-flex flex-column justify-content-center align-items-center py-3 ">
+<div class="btn-group dropend me-2">
+  <button class="btn btn-white dropdown-toggle text-white" style="font-size: xx-large;" type="button" data-bs-toggle="dropdown">Semester</button>
+<ul class="dropdown-menu">
+  <li><a class="dropdown-item" href="#" data-value1="Sem-1">Sem-1</a></li>
+<li><a class="dropdown-item" href="#" data-value1="Sem-2">Sem-2</a></li>
+<li><a class="dropdown-item" href="#" data-value1="Sem-3">Sem-3</a></li>
+<li><a class="dropdown-item" href="#" data-value1="Sem-4">Sem-4</a></li>
+<li><a class="dropdown-item" href="#" data-value1="Sem-5">Sem-5</a></li>
+<li><a class="dropdown-item" href="#" data-value1="Sem-6">Sem-6</a></li>
+<li><a class="dropdown-item" href="#" data-value1="Sem-7">Sem-7</a></li>
+<li><a class="dropdown-item" href="#" data-value1="Sem-8">Sem-8</a></li>
+</ul> 
+</div>
+<input type="text" id="selectedSem" style="font-size: large; font-weight: 500;" class="form-control-lg" placeholder="Select Semester"readonly>
+</div><!--end col-->
+
+<div class="col-md-4 d-flex flex-column justify-content-center align-items-center py-3">
+<label for="email"  style="font-size:xx-large; color: greenyellow;"class="form-label fw-bold " ><i class="fa fa-envelope text-white"></i> Email: </label>
+<input type="email" id="email" style="font-size: large; font-weight: 500;" name="email" class="form-control-lg" placeholder="Enter email-id" required>
+ </div>
+</div>   <!--end 3 row-->
+ <!--button row-->
+ <div class="row">
+    <div class="col-md text-center py-5">
+        <button type="button"  onclick="saveStudentData(event)" class="btn px-4 py-4 fw-bold fs-5" style="background-color: #f0a; box-shadow: 0 4px 8px #ccc;">Add Student</button>
+<button type="button" class="btn px-4 py-4 fw-bold fs-5" style="background-color: #f0a; box-shadow: 0 4px 8px #ccc;" onclick="loadstudent()">View Records</button>
+   <button type="button" class="btn px-4 py-4 fw-bold fs-5" style="background-color: #f0a; box-shadow: 0 4px 8px #ccc;"onclick="deleteById()">Delete Records </button>
+      </div>
+</div><!--end 4 row-->
+<!--table--> 
+<div class="container-fluid mt-5" id="studentTable" style="display: none;">
+<h2 class="text-center  text-white">Students Details</h2>
+  <div class="table-responsive">
+  <table class="table table-bordered text-white">
+    <thead>
+      <tr>
+        <th>Student ID</th>
+        <th>Student Name</th>
+        <th>Course</th>
+        <th>Semester</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody id="studentList">
+    </tbody>
+  </table>
+</div>
+</div>
+</form>
+</div> </div></div></div>
+<script>
+   
+    // courrse  selection
+    document.querySelectorAll('[data-value]').forEach(item => {
+      item.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.getElementById('selectedcou').value = this.getAttribute('data-value');
+      });
+    });
+// Semester selection
+    document.querySelectorAll('[data-value1]').forEach(item => {
+      item.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.getElementById('selectedSem').value = this.getAttribute('data-value1');
+      });
+    });
+
+    // Toggle nested submenus
+    document.querySelectorAll('.dropdown-submenu > .dropdown-toggle').forEach(toggle => {
+      toggle.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        const submenu = this.nextElementSibling;
+        if (submenu) submenu.classList.toggle('show');
+      });
+    });
+ // Close submenus
+    document.querySelectorAll('.dropdown').forEach(dropdown => {
+      dropdown.addEventListener('hide.bs.dropdown', function () {
+        dropdown.querySelectorAll('.dropdown-menu.show').forEach(submenu => {
+          submenu.classList.remove('show');
+        });
+      });
+    });
+ document.getElementById('studentname').addEventListener('input', function () {
+  this.value = this.value.replace(/[^A-Za-z\s]/g, ''); 
+});
+//save info
+function saveStudentData(event) {
+  event.preventDefault();
+
+  const id = document.getElementById('studentId').value.trim();
+  const name = document.getElementById('studentname').value.trim();
+  const course = document.getElementById('selectedcou').value.trim();
+  const sem = document.getElementById('selectedSem').value.trim();
+  const email = document.getElementById('email').value.trim();
+
+  if (!id || !name || !course ||!sem || !email) {
+    alert("Please fill out all fields.");
+    return;
+  }
+
+  let students = JSON.parse(localStorage.getItem("students")) || [];
+// Check if the book ID already exists
+ const exists = students.some(student => student.studentId === id); 
+  if (exists) {
+    alert(`student with ID ${id} already exists!`);
+    return;
+  }
+
+// Add new book
+  const newStudent = {
+  studentId: id,
+  name: name,
+  course: course,
+  sem:sem,
+  email: email,
+};
+
+  students.push(newStudent);
+  localStorage.setItem(`studentname_${id}`, name);
+
+  // Save updated array
+  localStorage.setItem("students", JSON.stringify(students));
+
+  alert(`student "${id}" added successfully!`);
+  addToActivityLog(`Added student: ID ${id}, Name "${name}", Course ${course}, Semester ${sem}`);
+
+  document.querySelector('form').reset();
+  loadstudent();
+}
+//function
+ function loadstudent() {
+  const studentList = document.getElementById('studentList');
+  const studentTable = document.getElementById('studentTable');
+  studentList.innerHTML = '';
+
+  let  students = JSON.parse(localStorage.getItem("students")) || [];
+
+  studentList.innerHTML = '';
+students.forEach(student => {
+  const row = document.createElement('tr');
+  row.innerHTML = `
+    <td>${student.studentId}</td>
+    <td>${student.name}</td>
+    <td>${student.course}</td>
+    <td>${student.sem}</td>
+    <td>${student.email}</td>
+  `;
+  studentList.appendChild(row);
+});
+studentTable.style.display = 'block';
+}
+
+function deleteById() {
+  const id = prompt("Enter the Student ID to delete:");
+  if (!id) return;
+
+  let students = JSON.parse(localStorage.getItem("students")) || [];
+  const index = students.findIndex(s => s.studentId === id);
+
+  if (index === -1) return alert(`No student found with ID ${id}.`);
+
+  const { name } = students[index];
+  if (!confirm(`Delete student "${name}" with ID ${id}?`)) return;
+
+  students.splice(index, 1);
+  localStorage.setItem("students", JSON.stringify(students));
+  addToActivityLog(`Deleted student: ID ${id}, Name "${name}"`);
+  alert(`Student with ID ${id} has been deleted.`);
+  loadstudent();
+}
+
+function addToActivityLog(message) {
+  const log = JSON.parse(localStorage.getItem("activityLog")) || [];
+  log.unshift({ 
+    timestamp: new Date().toLocaleString(),
+    message
+  });
+  localStorage.setItem("activityLog", JSON.stringify(log));
+}
+</script>
+</body>
+</html>                           

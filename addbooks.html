@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>managebook</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    
+    .form-control{
+        width: 200px;
+    }
+    
+    .btn{
+    color: greenyellow !important; 
+    background-color: #f0a;  
+  padding: 20px;             
+  border-radius: 20px;       
+  width:fit-content;           /* Width fit to content */
+  box-shadow: 0 4px 8px #ccc;
+  font-size: xx-large;
+}
+.head-shape h1 {
+  background-color: #f0a; 
+  color:greenyellow;              
+  padding: 10px;                
+  border-radius: 20px;   
+  width:fit-content;          
+  box-shadow: 0 4px 8px #ccc;
+}
+ </style>
+</head>
+<body>
+   <div class="container-fluid">
+        <div class="row">
+            <div class="col-md">
+<div class="bg" style="background-image: url('lib5.webp'); background-size: cover; background-position: center;min-height: 100vh;">
+   <nav class="navbar navbar-expand-lg bg-success navbar-dark px-4">
+  <div class="container-fluid justify-content-end">
+    <a class="nav-link text-white fw-bold" href="dash.html">
+      <i class="fa fa-home me-1"></i>Dashboard
+    </a>
+  </div>
+</nav> 
+  <!--heading-->
+    <div class=" head-shape d-flex flex-column align-items-center py-3 text-white">
+        <h1 class="display-4"><i class="fa-solid fa-book-open me-1"></i>Manage Book</h1>
+    </div>
+<!--Form-->
+<form class="was-validated text-white px-3">
+   <!--1 row--> 
+<div class="row">
+    <div class=" col-md-6 d-flex flex-column  justify-content-center align-items-center py-3">
+        <label for="bookId" class="me-2 fw-bold" style="font-size:x-large; color:greenyellow;">ISBN</label>
+        <input type="number" id="bookId"  class="form-control-lg" style="font-size: large; font-weight: 500;" placeholder="Book Number" required>
+    </div>
+    <div class="col-md-6 d-flex flex-column justify-content-center align-items-center py-3">
+       <label for="bookTitle" class="me-2 fw-bold" style="font-size:x-large;color:greenyellow;">Book Title:</label>
+        <input type="text" id="bookTitle" name="bookTitle" class="form-control-lg" style="font-size: large; font-weight: 500;" placeholder="Enter Name" required> 
+    </div><!--end col-->
+</div><!--end 1 row-->
+<!--2 row-->
+<div class="row">
+    <div class=" col-md-6 d-flex flex-column  justify-content-center align-items-center py-3">
+        <label for="bookauthor" class="me-2 fw-bold" style="font-size:x-large; color:greenyellow;"> Book Author</label>
+<input type="text" id="bookauthor"  class="form-control-lg" style="font-size: large; font-weight: 500;" placeholder="Author Name"required pattern="^[A-Za-z\s]{1,50}$">
+    </div>
+    <div class="col-md-6 d-flex flex-column justify-content-center align-items-center py-3">
+       <label for="year" class="me-2 fw-bold" style="font-size:x-large;color:greenyellow;">Year Of Publish:</label>
+        <input type="number" id="year" name="year" min="1" class="form-control-lg" style="font-size: large; font-weight: 500;" placeholder="Published year" required> 
+    </div><!--end col-->
+</div><!--end row-->
+<div class="row">
+    <div class=" col-md-6 d-flex flex-column  justify-content-center align-items-center py-3">
+        <label for="quantity" class="me-2 fw-bold" style="font-size:x-large; color:greenyellow;">Quantity</label>
+        <input type="number" id="quantity"min="1"  class="form-control-lg" style="font-size: large; font-weight: 500;" placeholder="Number of books" required>
+    </div>
+    <div class="col-md-6 d-flex flex-column justify-content-center align-items-center py-3">
+       <label for="price" class="me-2 fw-bold" style="font-size:x-large;color:greenyellow;"> Book Price</label>
+        <input type="number" id="price" name="price" min="1" class="form-control-lg" style="font-size: large; font-weight: 500;" placeholder="Price" required> 
+    </div><!--end col-->
+    
+</div><!--end row-->
+<div class="row">
+   <div class="col-md d-flex  justify-content-center">    
+   <button type="button" class="btn" onclick="saveBookData(event)">Add Book</button> 
+  <button type="button" class="btn" onclick="loadBooks()">View Books</button>
+   <button type="button" class="btn" onclick="deleteByISBN()">Delete Books  </button>
+    
+ </div>
+<!--end 4 row--></div>
+ <!--table--> 
+<div class="container mt-5" id="bookTable" style="display: none;">
+<h2 class="text-center text-white">Stored Books</h2>
+  <div class="table-responsive">
+  <table class="table table-bordered text-white">
+    <thead>
+      <tr>
+        <th>Book ID</th>
+        <th>Book Title</th>
+        <th>Author</th>
+        <th>Year</th>
+        <th>Quantity</th>
+        <th>Price</th>
+      </tr>
+    </thead>
+    <tbody id="bookList">
+      <!-- Book data -->
+    </tbody>
+  </table>
+</div>
+</div></form>
+
+</div></div></div></div>
+<script> 
+  document.getElementById('bookauthor').addEventListener('input', function () {
+    this.value = this.value.replace(/[^A-Za-z\s]/g, '');
+  });
+  
+function saveBookData(event) {
+  event.preventDefault();
+
+  const bookId = document.getElementById('bookId').value;
+  const title = document.getElementById('bookTitle').value;
+  const author = document.getElementById('bookauthor').value;
+  const year = document.getElementById('year').value;
+  const quantity = document.getElementById('quantity').value;
+  const price = document.getElementById('price').value;
+
+  if (!bookId || !title || !author || !year || !quantity || !price) {
+    alert("Please fill in all fields.");
+    return;
+  }
+
+  // Get existing books 
+  let books = JSON.parse(localStorage.getItem("books")) || [];
+
+  // Check if the book ID already exists
+  const exists = books.some(book => book.bookId === bookId);
+  if (exists) {
+    alert(`Book with ID ${bookId} already exists!`);
+    return;
+  }
+
+  // Add new book
+  const newBook = {
+    bookId,
+    title,
+    author,
+    year,
+    quantity: Number(quantity),
+    price: Number(price)
+  };
+
+  books.push(newBook);
+ localStorage.setItem("books", JSON.stringify(books));
+
+  alert(` Book "${bookId}" added successfully!`);
+  addToActivityLog(`Added book with ISBN ${bookId} - "${title}" by ${author}.`);
+
+  document.querySelector('form').reset();
+  loadBooks();
+}
+
+function loadBooks() {
+  const bookList = document.getElementById('bookList');
+  const bookTable = document.getElementById('bookTable');
+  bookList.innerHTML = '';
+
+  let books = JSON.parse(localStorage.getItem("books")) || [];
+
+  if (bookTable.style.display === 'none' || bookTable.style.display === '') {
+    books.forEach(book => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${book.bookId}</td>
+        <td>${book.title}</td>
+        <td>${book.author}</td>
+        <td>${book.year}</td>
+        <td>${book.quantity}</td>
+        <td>${book.price}</td>
+      `;
+      bookList.appendChild(row);
+    });
+
+    bookTable.style.display = 'block';
+  } else {
+    bookTable.style.display = 'none';
+  }
+}
+
+function deleteByISBN() {
+  const bookId = document.getElementById('bookId').value.trim();
+
+  if (!bookId) {
+    alert(" Please enter the ISBN number.");
+    return;
+  }
+
+  const confirmed = confirm(`Are you sure you want to delete the book with ISBN ${bookId}?`);
+
+  if (!confirmed) {
+    
+    return;
+  }
+
+  let books = JSON.parse(localStorage.getItem("books")) || [];
+
+  const index = books.findIndex(book => book.bookId === bookId);
+
+  if (index !== -1) {
+    books.splice(index, 1);
+    localStorage.setItem("books", JSON.stringify(books));
+    alert(`Book with ISBN ${bookId} has been deleted.`);
+    addToActivityLog(`Added book with ISBN ${bookId} - "${title}" by ${author}.`);
+    document.querySelector('form').reset();
+    loadBooks();
+  } else {
+    alert(`No book found with ISBN ${bookId}.`);
+  }
+}
+function addToActivityLog(message) {
+  const log = JSON.parse(localStorage.getItem("activityLog")) || [];
+  log.unshift({ // add to start for recent-first
+    timestamp: new Date().toLocaleString(),
+    message
+  });
+  localStorage.setItem("activityLog", JSON.stringify(log));
+}
+</script>
+</body>
+</html>

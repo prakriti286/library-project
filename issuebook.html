@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>issuebook</title>
+   
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+  <style>
+   #messageBox {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  transition: opacity 0.5s ease;
+}
+ 
+    .form-control{
+        width: 200px;
+    }
+    
+    .btn{
+    color: greenyellow !important; 
+    background-color: #f0a;  
+  padding: 20px;             
+  border-radius: 20px;       
+  width:fit-content;           /* Width fit to content */
+  box-shadow: 0 4px 8px #ccc;
+  font-size: xx-large;
+}
+.head-shape h1 {
+  background-color: #f0a; 
+  color:greenyellow;              
+  padding: 10px;                
+  border-radius: 20px;   
+  width:fit-content;          
+  box-shadow: 0 4px 8px #ccc;
+}
+ </style>
+</head>
+<body>
+   <div class="container-fluid">
+        <div class="row">
+            <div class="col-md">
+<div class="bg" style="background-image: url('bookissue.jpg'); background-size: cover; background-position: center;min-height: 100vh;">
+    <nav class="navbar navbar-expand-lg bg-wheat navbar-dark px-4">
+  <div class="container-fluid justify-content-end">
+    <a class="nav-link text-white fw-bold" href="dash.html">
+      <i class="fa fa-home me-1"></i>Dashboard
+    </a>
+  </div>
+</nav><!--heading-->
+    <div class=" head-shape d-flex flex-column align-items-center py-3 text-white">
+        <h1 class="display-4"><i class="fa-solid fa-book-open-reader me-1"></i>Issue Book</h1>
+    </div>
+<!--Form-->
+<form class="was-validated text-white px-3">
+  
+
+   <!--1 row--> 
+<div class="row">
+    <div class=" col-md-4 d-flex flex-column  justify-content-center align-items-center py-3">
+        <label for="bookId" class="me-2 fw-bold" style="font-size:x-large; color:greenyellow;">ISBN</label>
+        <input type="number" id="bookId"  class="form-control-lg" style="font-size: large; font-weight: 500;" placeholder="Book Number" required>
+    </div>
+   <div class=" col-md-4 d-flex flex-column  justify-content-center align-items-center py-3">
+       <label for="bookTitle" class="me-2 fw-bold" style="font-size:x-large;color:greenyellow;">Book Title:</label>
+        <input type="text" id="bookTitle" name="bookTitle" class="form-control-lg" style="font-size: large; font-weight: 500;" placeholder="Enter your name" readonly> 
+    </div><!--end col-->
+    
+    <div class=" col-md-4 d-flex flex-column  justify-content-center align-items-center py-3">
+        <label for="bookauthor" class="me-2 fw-bold" style="font-size:x-large; color:greenyellow;"> Book Author</label>
+<input type="text" id="bookauthor"  class="form-control-lg" style="font-size: large; font-weight: 500;" placeholder="authorName"required pattern="^[A-Za-z\s]{1,50}$" readonly>
+    </div> 
+</div><!--end 1 row-->
+<div class="row">
+    <div class=" col-md-6 d-flex flex-column  justify-content-center align-items-center py-3">
+        <label for="studentId" class="me-2 fw-bold" style="font-size:x-large; color:greenyellow;">Student ID</label>
+        <input type="number" id="studentId"  class="form-control-lg" style="font-size: large; font-weight: 500;" placeholder="Student ID" required>
+    </div>
+    <div class=" col-md-6 d-flex flex-column  justify-content-center align-items-center py-3">
+        <label for="studentname" class="me-2 fw-bold" style="font-size:x-large; color:greenyellow;"> Student Name</label>
+<input type="text" id="studentname"  class="form-control-lg" style="font-size: large; font-weight: 500;" placeholder="studentName"required  readonly>
+    </div> </div><!--end 1 row-->
+    <div class="row">
+    <div class="col-md-6 d-flex flex-column justify-content-center align-items-center py-3">
+       <label for="currentDate" class="me-2 fw-bold" style="font-size:x-large;color:greenyellow;">Issue Date:</label>
+        <input type="date" id="currentDate" name="currentDate" class="form-control-lg" style="font-size: large; font-weight: 500;" placeholder="Date of issue" readonly> 
+    </div><!--end col-->
+
+<div class="col-md-6 d-flex flex-column justify-content-center align-items-center py-3">
+       <label for="returnDate" class="me-2 fw-bold" style="font-size:x-large;color:greenyellow;"> Return Date:</label>
+        <input type="date" id="returnDate" name="returnDate" class="form-control-lg" style="font-size: large; font-weight: 500;" placeholder="Date of return" readonly> 
+    </div><!--end col-->
+</div><!--end row-->
+<!--row-->
+<div class="row">
+   <div class="col-md d-flex  justify-content-center">
+        <button type="submit" class="btn">Issue Book</button>
+  <button type="button" class="btn" onclick="toggleIssuedTable()">View Records</button>
+
+  <!--<button class="btn btn-danger" onclick="clearAllRecords()">Clear All Records</button>-->
+
+
+</div>
+   </div>
+
+<!--endrow--> 
+<div class="container mt-4" id="issueTableContainer" style="display: none;">
+  <h2 class="text-white text-center">Issued Book Records</h2>
+  <div class="table-responsive">
+    <table class="table table-bordered text-white">
+      <thead>
+        <tr>
+          <th>ISBN</th>
+          <th>Book Title</th>
+          <th>Author</th>
+          <th>Student ID</th>
+          <th>Student Name</th>
+          <th>Issue Date</th>
+          <th>Return Date</th>
+        </tr>
+      </thead>
+      <tbody id="issueTableBody">
+        <!-- Issued book data will go here -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div id="messageBox" class="alert alert-success text-center d-none">
+  Book Issued Successfully!
+</div>
+<script>
+  
+  window.onload = function () {
+    // Set issue and return dates on load
+    const today = new Date();
+    const returnDay = new Date();
+    returnDay.setDate(today.getDate() + 15);
+    const formatDate = date => date.toISOString().split('T')[0];
+
+    document.getElementById('currentDate').value = formatDate(today);
+    document.getElementById('returnDate').value = formatDate(returnDay);
+  };
+
+  // Autofill book details on ISBN change
+  document.getElementById('bookId').addEventListener('change', function () {
+    const bookId = this.value;
+    const books = JSON.parse(localStorage.getItem('books')) || [];
+const book = books.find(b => b.bookId == bookId);
+
+
+if (book) {
+  document.getElementById('bookTitle').value = book.title;
+  document.getElementById('bookauthor').value = book.author;
+} else {
+  document.getElementById('bookTitle').value = '';
+  document.getElementById('bookauthor').value = '';
+  alert("Book not found in library!");
+}});
+
+  document.getElementById('studentId').addEventListener('change', function () {
+  const studentId = this.value.trim();
+  const students = JSON.parse(localStorage.getItem('students')) || [];
+  const student = students.find(s => s.studentId === studentId);
+
+  if (student) {
+    document.getElementById('studentname').value = student.name;
+  } else {
+    document.getElementById('studentname').value = '';
+    alert("Student information not found! Please register first.");
+  }
+});
+
+  document.querySelector('form').addEventListener('submit', function (e) {
+  e.preventDefault();
+
+  const bookId = document.getElementById('bookId').value.trim();
+  const bookTitle = document.getElementById('bookTitle').value.trim();
+   const bookAuthor = document.getElementById('bookauthor').value.trim();
+   const studentId = document.getElementById('studentId').value.trim();
+   const studentname = document.getElementById('studentname').value.trim();
+  const issueDate = document.getElementById('currentDate').value.trim();
+  const returnDate = document.getElementById('returnDate').value.trim();
+
+  if (!bookId || !bookTitle || !bookAuthor|| !studentId || !studentname) {
+    alert("Please fill all the fields.");
+    return;
+  }
+
+  let issueHistory = JSON.parse(localStorage.getItem('issueHistory')) || [];
+
+  // 1. Check if book already issued and not returned
+  const isBookIssued = issueHistory.some(issue => issue.bookId === bookId);
+  if (isBookIssued) {
+    alert("This book is already issued and not yet returned.");
+    return;
+  }
+
+  // 2. Check if student has already issued 3 books
+  const booksIssuedByStudent = issueHistory.filter(issue => issue.studentId === studentId).length;
+  if (booksIssuedByStudent >= 3) {
+    alert("Student has already issued maximum allowed books (3).");
+    return;
+  }
+
+  // Create new issue transaction
+  const transaction = { bookId, bookTitle, bookAuthor,  studentId,  studentname,issueDate, returnDate };
+
+  // Add to history and save
+  issueHistory.push(transaction);
+  localStorage.setItem('issueHistory', JSON.stringify(issueHistory));
+
+  // Save book details for autofill
+  localStorage.setItem(`bookTitle_${bookId}`, bookTitle);
+  localStorage.setItem(`bookauthor_${bookId}`, bookAuthor);
+localStorage.setItem(`studentname_${studentId}`, studentname);
+// Add to activity log
+addToActivityLog(`Book "${bookTitle}" (ISBN: ${bookId}) issued to student ${studentname} (ID: ${studentId}) on ${issueDate}`);
+
+
+  const messageBox = document.getElementById('messageBox');
+messageBox.classList.remove('d-none');
+setTimeout(() => {
+  messageBox.classList.add('d-none');
+}, 3000)
+
+  // Reset form & dates
+  this.reset();
+  document.getElementById('bookTitle').value = '';
+  document.getElementById('bookauthor').value = '';
+  document.getElementById('studentname').value = '';
+
+  const today = new Date();
+  const returnDay = new Date();
+  returnDay.setDate(today.getDate() + 15);
+  const formatDate = date => date.toISOString().split('T')[0];
+  document.getElementById('currentDate').value = formatDate(today);
+  document.getElementById('returnDate').value = formatDate(returnDay);
+  // Show updated table
+  const tableContainer = document.getElementById('issueTableContainer');
+  if (tableContainer.style.display === 'block') {
+    tableContainer.style.display = 'none'; // Refresh if already shown
+  }
+  toggleIssuedTable();
+});
+
+  function toggleIssuedTable() {
+  const tableContainer = document.getElementById('issueTableContainer');
+  const tableBody = document.getElementById('issueTableBody');
+
+  if (tableContainer.style.display === 'none' || tableContainer.style.display === '') {
+    // Show the table
+    tableBody.innerHTML = ''; // Clear old data
+
+    const issueHistory = JSON.parse(localStorage.getItem('issueHistory')) || [];
+
+    issueHistory.forEach(entry => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${entry.bookId}</td>
+        
+        <td>${entry.bookTitle}</td>
+        <td>${entry.bookAuthor}</td>
+        <td>${entry.studentId}</td>
+        <td>${entry.studentname}</td>
+        <td>${entry.issueDate}</td>
+        <td>${entry.returnDate}</td>
+      `;
+      tableBody.appendChild(row);
+    });
+
+    tableContainer.style.display = 'block';
+  } else {
+    // Hide the table
+    tableContainer.style.display = 'none';
+  }
+}
+function addToActivityLog(message) {
+  const log = JSON.parse(localStorage.getItem("activityLog")) || [];
+  log.unshift({ // add to start for recent-first
+    timestamp: new Date().toLocaleString(),
+    message
+  });
+  localStorage.setItem("activityLog", JSON.stringify(log));
+}
+/*function clearAllRecords() {
+  if (confirm("Are you sure you want to clear all issued book records?")) {
+    localStorage.removeItem('issueHistory');  // Deletes all issued book records
+    document.getElementById('issueTableBody').innerHTML = ''; // Clear the table body
+    document.getElementById('issueTableContainer').style.display = 'none'; // Hide the table
+    alert("All records cleared!");
+  }
+}
+*/
+</script>
+
+</body>
+</html>

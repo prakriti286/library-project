@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library system</title>
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+.head-shape h1 {
+  background-color: fuchsia !important;
+   color:greenyellow;              
+  padding: 10px;                
+  border-radius: 20px;   
+  width:fit-content;          
+  box-shadow: 0 4px 8px #ccc;
+}
+</style>
+</head>
+<body class="bg-success">   
+<div class="container-fluid">
+ <div class="row">
+<div class="col-md">
+  <!--heading-->
+ <div class=" head-shape text-center d-flex flex-column align-items-center py-3 text-white">
+<h1 class="display-4">Library Management System</h1>
+</div>
+<!--navbar-->
+<nav class="bg-info rounded mb-3">
+  <ul class="nav justify-content-center py-2">
+    <li class="nav-item"><a class="nav-link text-white px-md-4" href="dash.html">Home</a></li>
+    <li class="nav-item"><a class="nav-link text-white px-md-4" href="addbooks.html">Manage Book</a></li>
+    <li class="nav-item"><a class="nav-link text-white px-md-4" href="issuebook.html">Issue Book</a></li>
+    <li class="nav-item"><a class="nav-link text-white px-md-4" href="returnbook.html">Return Book</a></li>
+    <li class="nav-item"><a class="nav-link text-white px-md-4" href="student.html">Add Student</a></li>
+  </ul>
+</nav>
+<div class="container-fluid">
+ <form class="was-validated text-white px-3">
+ <div class="row">
+    <div class=" col-md-6 card flex-column text-white bg-secondary mb-2 justify-content-center align-items-center py-2">
+     <div class="card-header">Total Books</div> 
+     <div class="card-body py-2"> 
+<h5 class="card-title" id="bookCount">0</h5> 
+ <p class="card-text"> Total Number Of Books in the libary </p>
+       </div></div>
+<div class=" col-md-6  card flex-column text-white bg-primary mb-2 justify-content-center align-items-center py-2">
+     <div class="card-header">Total Students</div> 
+     <div class="card-body py-2"> 
+          <h5 class="card-title" id="studentCount">0</h5> 
+       <p class="card-text"> Total Number Of Students Enrolled </p>
+       </div></div>
+       </div><!--end row-->
+    <div class="container-fluid">
+        <div class="row">
+     <div class=" col-md-4  card flex-column text-white bg-primary mb-2 justify-content-center align-items-center py-2">
+     <div class="card-header">Issued Books</div> 
+     <div class="card-body py-2">
+ <h5 class="card-title" id="issuebooks">0</h5> 
+       <p class="card-text"> Total Number Of Books Issued </p>
+       </div></div>   
+       
+     <div class=" col-md-4  card flex-column text-white bg-secondary mb-2 justify-content-center align-items-center py-2">
+     <div class="card-header">Returned Books</div> 
+     <div class="card-body py-2">
+ <h5 class="card-title" id="returnbooks">0</h5> 
+       <p class="card-text"> Total Number Of Books returned </p>
+       </div></div> 
+       <div class=" col-md-4  card flex-column text-white bg-primary mb-2 justify-content-center align-items-center py-2">
+     <div class="card-header">Over Due Books</div> 
+     <div class="card-body py-2">
+ <h5 class="card-title" id="overduebooks">0</h5> 
+       <p class="card-text">Over Due Books </p>
+       </div></div> </div>  </div> 
+       <div class="container-fluid">
+        <div class="row">
+<div class=" col-md-6  card flex-column text-white bg-secondary mb-3 justify-content-center align-items-center py-2">
+<div class="card-header bg-dark text-white">📋 Recent Activity</div>
+  <ul class="list-group list-group-flush" id="activityList"></ul>
+</div>
+<div class=" col-md-6  card flex-column text-white bg-danger mb-3 justify-content-center align-items-center py-2">
+  <p>Issued Today: <span id="issuedToday">0</span></p>
+  <p>Returned Today: <span id="returnedToday">0</span></p>
+  </div>
+</div></div>
+</form>
+</div>
+<footer class="bg-info text-center py-3">
+    <p>&copy;Library Management System,2025</p>
+</footer>
+<script>
+window.onload = function () {
+  const books = JSON.parse(localStorage.getItem("books")) || [];
+  const students = JSON.parse(localStorage.getItem("students")) || [];
+  const issueHistory = JSON.parse(localStorage.getItem("issueHistory")) || [];
+  const returnHistory = JSON.parse(localStorage.getItem("returnHistory")) || [];
+
+  document.getElementById("bookCount").textContent = books.length;
+  document.getElementById("studentCount").textContent = students.length;
+  document.getElementById("issuebooks").textContent = issueHistory.length;
+  document.getElementById("returnbooks").textContent = returnHistory.length;
+
+  const today = new Date().toISOString().split("T")[0];
+
+  // Books issued today
+  const issuedTodayCount = issueHistory.filter(entry => entry.issueDate === today).length;
+  document.getElementById("issuedToday").textContent = issuedTodayCount;
+
+  // Books returned today
+  const returnedTodayCount = returnHistory.filter(entry => entry.returnDate === today).length;
+  document.getElementById("returnedToday").textContent = returnedTodayCount;
+
+  // Overdue books (not returned yet and returnDate < today)
+  const todayDate = new Date(today);
+  const returnedBookIds = returnHistory.map(entry => entry.bookId + "_" + entry.studentId);
+  const overdueBooks = issueHistory.filter(entry => {
+    const isReturned = returnedBookIds.includes(entry.bookId + "_" + entry.studentId);
+    const dueDate = new Date(entry.returnDate);
+    return !isReturned && dueDate < todayDate;
+  });
+
+  document.getElementById("overduebooks").textContent = overdueBooks.length;
+
+  // Load and display recent activity log
+  const activityLog = JSON.parse(localStorage.getItem("activityLog")) || [];
+  const activityList = document.getElementById("activityList");
+  activityList.innerHTML = ""; // Clear previous if any
+
+  activityLog.slice(0, 5).forEach(entry => {
+    const li = document.createElement("li");
+    li.className = "list-group-item";
+    li.innerHTML = `<small>${entry.timestamp}</small><br><strong>${entry.message}</strong>`;
+    activityList.appendChild(li);
+  });
+};
+</script>
+
+</body>
+</html>

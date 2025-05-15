@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>signup</title>
+<link rel="stylesheet" href="signstyle.css">
+ <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+  <style>
+  .btn{
+    color:wheat !important; 
+    background-color:peru;  
+  padding: 20px;             
+  border-radius: 20px;       
+  width:fit-content;           /* Width fit to content */
+  box-shadow: 0 4px 8px #ccc;
+  font-size: xx-large;
+  }
+  .input-group-text{
+    cursor: pointer;
+  }
+</style>
+<div class="container-fluid"> 
+<div class="row">
+  <div class="col-md">
+<div class="bg"style="background-image:url('lib.jpg'); background-size: cover;background-position: center;height: 100vh;">
+<!--heading-->
+  <div class="d-flex flex-column justify-content-center align-items-center h-100vh text-white">
+<h1 class="display-3" style="font-weight: bold; width:fit-content; box-shadow: 0 4px 8px #ccc;color:wheat; background-color:peru; border-radius: 20px; padding: 10px;">Create Your Account Here
+</h1></div>
+  <form class="was-validated" id="signup">
+    <div class="row">
+      <div class="col-md d-flex flex-column justify-content-center align-items-center h-100vh text-white">
+  <label for="name" class="py-md-3 display-6" style="font-weight: bold; color: #f0a;"><i class="fa fa-person text-white"></i>UserName:</label>
+ <input type="text" id="name" class="form-control-lg" style="font-size: large; font-weight: 500;" placeholder="Name"required pattern="^[A-Za-z\s]{1,50}$">
+   <!---->
+ <label for="password" class="py-md-3 display-6" style="font-weight: bold;  color: #f0a;"><i class="fa fa-lock text-white"></i>Password:</label>
+<div class="input-group mb-3 d-flex flex-column justify-content-center align-items-center ">
+  <input type="password" id="password" class="form-control-lg" placeholder="Password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
+  <span class="input-group-text" id="togglePassword"><i class="fa fa-eye" id="toggleIcon"></i></span>
+</div>
+
+             
+<label for="email"class="py-md-3 display-6" style="font-weight: bold; color: #f0a;"><i class="fa fa-envelope text-white"></i> Email:</label>
+<input type="email" name="email" class="form-control-lg" style="font-size: large; font-weight: 500;" placeholder="Enter your email-id" required>
+      </div></div><!--end 2 row-->
+      <div class="row py-md-3">
+        <div class="col-md d-flex flex-column justify-content-center align-items-center h-100vh text-white">
+<button type="submit" class="btn">Register</button>
+
+</div></div><!--end 3 row-->
+  </form>
+  </div></div> </div>
+</div>  
+  <script>
+  // Toggle password visibility
+  document.getElementById('togglePassword').addEventListener('click', function () {
+    const passwordInput = document.getElementById('password');
+    const toggleIcon = document.getElementById('toggleIcon');
+    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+    passwordInput.setAttribute('type', type);
+    toggleIcon.classList.toggle('fa-eye');
+    toggleIcon.classList.toggle('fa-eye-slash');
+  });
+
+  // Hash function using Web Crypto API
+  async function hashPassword(password) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(password);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+
+  // Form submit event
+  document.getElementById('signup').addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const username = document.getElementById('name').value.trim();
+    const password = document.getElementById('password').value;
+    const emailInput = document.querySelector('input[name="email"]').value.trim();
+
+    if (!username || !password || !emailInput) {
+      alert('Please fill out all fields.');
+      return;
+    }
+
+    const hashedPassword = await hashPassword(password);
+
+    // Fetch existing users
+    let users = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+
+    // Check if email is already registered
+    if (users.some(u => u.email === emailInput)) {
+      alert('Email already registered! Try logging in.');
+      return;
+    }
+
+    // Add new user
+    users.push({
+      username: username,
+      email: emailInput,
+      passwordHash: hashedPassword
+    });
+
+    localStorage.setItem('registeredUsers', JSON.stringify(users));
+
+    alert('Registration successful! Please login.');
+    window.location.href = 'admin.html';
+  });
+
+  // Restrict username input to letters and spaces only
+  document.getElementById('name').addEventListener('input', function () {
+    this.value = this.value.replace(/[^A-Za-z\s]/g, '');
+  });
+</script>
+
+             
+    </body>
+</html> 
